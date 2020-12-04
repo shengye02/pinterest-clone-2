@@ -65,7 +65,7 @@ function Header() {
           {clickOpenMessages ? (
             <div className="header__messages__sidenav">
               <div className="header__message__intro">
-                <h1> Messages </h1>
+                <h1> Messages HELLO</h1>
               </div>
             </div>
           ) : null}
