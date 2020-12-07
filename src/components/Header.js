@@ -8,24 +8,31 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { IconButton } from "@material-ui/core";
 import "./Header.css";
 
-function Header() {
+function Header(props) {
   const [clickOpenUpdates, setClickUpdates] = useState(false);
   const [clickOpenMessages, setClickMessages] = useState(false);
   const [clickOpenOptions, setClickOptions] = useState(false);
+  const [input, setInput] = useState("");
 
   const onClickUpdates = () => {
     setClickUpdates((openState) => !openState);
   };
 
   const onClickMessages = () => {
-    console.log("konnichiwa messages");
     setClickMessages((openState) => !openState);
   };
 
   const onClickOptions = () => {
-    console.log("konnichiwa options");
     setClickOptions((openState) => !openState);
   };
+
+  const onSearchSubmit = (e) => {
+    e.preventDefault();
+    props.onSubmit(input);
+    // searchTerm add it to firebase of the user now.
+    // remove another searchTerm at the end (to not have a full list of searchTerms);
+  };
+
   return (
     <div className="header__wrapper">
       <div className="header__logo">
@@ -42,7 +49,16 @@ function Header() {
       <div className="header__search">
         <div className="header__searchContainer">
           <SearchIcon />
-          <input placeholder="Search" type="text" />
+          <form>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <button onClick={onSearchSubmit} type="submit">
+              Send a message
+            </button>
+          </form>
         </div>
       </div>
       <div className="header__menuItems">
@@ -65,20 +81,26 @@ function Header() {
           {clickOpenMessages ? (
             <div className="header__messages__sidenav">
               <div className="header__message__intro">
-                <h1> Messages HELLO</h1>
+                <h1> Messages</h1>
               </div>
             </div>
           ) : null}
         </div>
-        {/* //profile picture later */}
         <IconButton>
           {/* // will contain link to profile page */}
           <FaceIcon />
         </IconButton>
         <div className="header__options" onClick={onClickOptions}>
-          <IconButton>
+          <IconButton size="small">
             <KeyboardArrowDownIcon />
           </IconButton>
+          {clickOpenOptions ? (
+            <div className="header__options__dropdown">
+              <div className="header__options__intro">
+                <h1> Options</h1>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -86,3 +108,15 @@ function Header() {
 }
 
 export default Header;
+
+// <form>
+// <input
+//   value={input}
+//   placeholder="Search"
+//   type="submit"
+//   onChange={(e) => setInput(e.target.value)}
+// />
+// <button onSubmit={onSearchSubmit} type="submit">
+//   Search keyword
+// </button>
+// </form>
