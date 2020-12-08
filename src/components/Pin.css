@@ -1,27 +1,40 @@
-.pin__container {
+.pins {
+  height: fit-content;
+}
+
+.pin__containerMedium {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 252px;
-  height: 418px;
   padding: 0px 8px 16px 8px;
   background-color: white;
   box-sizing: border-box;
+  width: 252px;
+  height: 418px;
+  box-sizing: border-box;
 }
 
-.pin__img__container {
+.pin__containerSmall {
+  width: 252px;
+  height: 292px;
+}
+
+.pin__containerMedium > img {
   display: flex;
-  font-size: 12px;
   cursor: zoom-in;
+  border-radius: 16px;
+  object-fit: cover;
   width: 236px;
   height: 354px;
 }
 
-.pin__img__container > img {
-  width: 100%;
-  height: 100%;
+.pin__containerSmall > img {
+  display: flex;
+  cursor: zoom-in;
   border-radius: 16px;
-  object-fit: contain;
+  object-fit: cover;
+  width: 236px;
+  height: 236px;
 }
 
 .img__buttons {
@@ -32,6 +45,7 @@
 
 .pin__text__container {
   display: flex;
+  flex-wrap: wrap;
   background-color: white;
   width: 100%;
   height: 100%;
@@ -41,6 +55,7 @@
 
 .pin__text__container p {
   color: #111;
+  font-size: 12px;
   font-weight: 700;
   text-decoration: none;
   text-align: left;

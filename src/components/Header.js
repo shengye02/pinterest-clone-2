@@ -7,6 +7,7 @@ import TextsmsIcon from "@material-ui/icons/Textsms";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { IconButton } from "@material-ui/core";
 import "./Header.css";
+import db from "../firebase";
 
 function Header(props) {
   const [clickOpenUpdates, setClickUpdates] = useState(false);
@@ -29,8 +30,11 @@ function Header(props) {
   const onSearchSubmit = (e) => {
     e.preventDefault();
     props.onSubmit(input);
-    // searchTerm add it to firebase of the user now.
-    // remove another searchTerm at the end (to not have a full list of searchTerms);
+    if (input) {
+      db.collection("terms").add({
+        term: input,
+      });
+    }
   };
 
   return (
@@ -120,3 +124,10 @@ export default Header;
 //   Search keyword
 // </button>
 // </form>
+
+// => {
+//   if (doc.data().term !== input) {
+//     db.collection("terms").add({
+//       term: input,
+//     });
+//   }
