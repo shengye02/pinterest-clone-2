@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Header";
 import Mainboard from "./Mainboard";
+import UserBoards from "./UserBoards";
 import unsplash from "../api/unsplash";
 import db from "../firebase";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   const [pins, setNewPins] = useState([]);
@@ -67,12 +69,26 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app__header">
-        <Header onSubmit={onSearchSubmit} />
-      </div>
-      <div className="app__body">
-        <Mainboard pins={pins} />
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/mainboard">
+            <div className="app__header">
+              <Header onSubmit={onSearchSubmit} />
+            </div>
+            <div className="app__body">
+              <Mainboard pins={pins} />
+            </div>
+          </Route>
+          <Route path="/userBoards">
+            <div className="app__header">
+              <Header onSubmit={onSearchSubmit} />
+            </div>
+            <div className="app__body">
+              <UserBoards pins={pins} />
+            </div>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
