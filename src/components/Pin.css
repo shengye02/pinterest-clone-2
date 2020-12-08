@@ -3,6 +3,7 @@
 }
 
 .pin__containerMedium {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,11 +15,6 @@
   box-sizing: border-box;
 }
 
-.pin__containerSmall {
-  width: 252px;
-  height: 292px;
-}
-
 .pin__containerMedium > img {
   display: flex;
   cursor: zoom-in;
@@ -26,6 +22,27 @@
   object-fit: cover;
   width: 236px;
   height: 354px;
+}
+
+.pin__containerSmall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 8px 16px 8px;
+  background-color: white;
+  box-sizing: border-box;
+  position: relative;
+  width: 252px;
+  height: 292px;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
 }
 
 .pin__containerSmall > img {
@@ -37,6 +54,35 @@
   height: 236px;
 }
 
+.layer {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 15%;
+  left: 47%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.layer small {
+  background-color: yellow;
+}
+
+.pin__containerSmall:hover .image {
+  opacity: 0.3;
+}
+.pin__containerSmall:hover .layer {
+  opacity: 1;
+}
+
+.pin__containerMedium:hover .image {
+  opacity: 0.3;
+}
+.pin__containerMedium:hover .layer {
+  opacity: 1;
+}
+
 .img__buttons {
 }
 .pin__img__container > img:hover .img__buttons {
@@ -45,10 +91,8 @@
 
 .pin__text__container {
   display: flex;
-  flex-wrap: wrap;
+  flex: 1;
   background-color: white;
-  width: 100%;
-  height: 100%;
   box-sizing: border-box;
   padding: 8px 6px 16px;
 }
@@ -59,4 +103,35 @@
   font-weight: 700;
   text-decoration: none;
   text-align: left;
+}
+
+.pin__boards__menu {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 20px;
+}
+
+.pin__boards__menu > h1 {
+  font-size: 12px;
+  text-align: left;
+}
+
+.pin__boards__menu .left {
+  background-color: white;
+  flex: 0.8;
+  opacity: 0.7;
+  display: flex;
+  border-radius: 12px 0px 0px 12px;
+  justify-content: space-between;
+}
+
+.pin__boards__menu .right {
+  background-color: #e60023;
+  opacity: 0.8;
+  flex: 0.3;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px 12px 12px 0px;
 }
