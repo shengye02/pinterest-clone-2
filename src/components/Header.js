@@ -10,21 +10,11 @@ import "./Header.css";
 import db from "../firebase";
 
 function Header(props) {
-  const [clickOpenUpdates, setClickUpdates] = useState(false);
-  const [clickOpenMessages, setClickMessages] = useState(false);
-  const [clickOpenOptions, setClickOptions] = useState(false);
+  const [clickOpen, setClickOpen] = useState(false);
   const [input, setInput] = useState("");
 
-  const onClickUpdates = () => {
-    setClickUpdates((openState) => !openState);
-  };
-
-  const onClickMessages = () => {
-    setClickMessages((openState) => !openState);
-  };
-
-  const onClickOptions = () => {
-    setClickOptions((openState) => !openState);
+  const onClick = () => {
+    setClickOpen((openState) => !openState);
   };
 
   const onSearchSubmit = (e) => {
@@ -35,76 +25,81 @@ function Header(props) {
         term: input,
       });
     }
+    // function in here where duplicate input is not allowed;
+    // previous input will be deleted so that last input (same term) will remain
+    // and will be used in App.js to getNewPins at refreshing of the page.
   };
 
   return (
-    <div className="header__wrapper">
-      <div className="header__logo">
-        <IconButton>
-          <PinterestIcon />
-        </IconButton>
-      </div>
-      <div className="header__button homePage">
-        <a href="/">Homepage</a>
-      </div>
-      <div className="header__button following">
-        <a href="/">Following</a>
-      </div>
-      <div className="header__search">
-        <div className="header__searchContainer">
-          <SearchIcon />
-          <form>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <button onClick={onSearchSubmit} type="submit">
-              Send a message
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="header__menuItems">
-        <div className="header__notification" onClick={onClickUpdates}>
+    <div className="app__header">
+      <div className="header__wrapper">
+        <div className="header__logo">
           <IconButton>
-            <NotificationsIcon />
+            <PinterestIcon />
           </IconButton>
-          {clickOpenUpdates ? (
-            <div className="header__notification__dropdown">
-              <div className="header__notification__dropdown updates">
-                <h1>Updates</h1>
-              </div>
-            </div>
-          ) : null}
         </div>
-        <div className="header__messages" onClick={onClickMessages}>
+        <div className="header__button homePage">
+          <a href="/">Homepage</a>
+        </div>
+        <div className="header__button following">
+          <a href="/">Following</a>
+        </div>
+        <div className="header__search">
+          <div className="header__searchContainer">
+            <SearchIcon />
+            <form>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+              <button onClick={onSearchSubmit} type="submit">
+                Send a message
+              </button>
+            </form>
+          </div>
+        </div>
+        <div className="header__menuItems">
+          <div className="header__notification" onClick={onClick}>
+            <IconButton>
+              <NotificationsIcon />
+            </IconButton>
+            {clickOpen ? (
+              <div className="header__notification__dropdown">
+                <div className="header__notification__dropdown updates">
+                  <h1>Updates</h1>
+                </div>
+              </div>
+            ) : null}
+          </div>
+          <div className="header__messages" onClick={onClick}>
+            <IconButton>
+              <TextsmsIcon />
+            </IconButton>
+            {clickOpen ? (
+              <div className="header__messages__sidenav">
+                <div className="header__message__intro">
+                  <h1> Messages</h1>
+                </div>
+              </div>
+            ) : null}
+          </div>
           <IconButton>
-            <TextsmsIcon />
+            {/* // will contain link to profile page */}
+            <FaceIcon />
           </IconButton>
-          {clickOpenMessages ? (
-            <div className="header__messages__sidenav">
-              <div className="header__message__intro">
-                <h1> Messages</h1>
+          <div className="header__options" onClick={onClick}>
+            <IconButton size="small">
+              <KeyboardArrowDownIcon />
+            </IconButton>
+            {clickOpen ? (
+              <div className="header__options__dropdown">
+                <div className="header__options__intro">
+                  <h1> Options</h1>
+                </div>
               </div>
-            </div>
-          ) : null}
-        </div>
-        <IconButton>
-          {/* // will contain link to profile page */}
-          <FaceIcon />
-        </IconButton>
-        <div className="header__options" onClick={onClickOptions}>
-          <IconButton size="small">
-            <KeyboardArrowDownIcon />
-          </IconButton>
-          {clickOpenOptions ? (
-            <div className="header__options__dropdown">
-              <div className="header__options__intro">
-                <h1> Options</h1>
-              </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
@@ -112,22 +107,3 @@ function Header(props) {
 }
 
 export default Header;
-
-// <form>
-// <input
-//   value={input}
-//   placeholder="Search"
-//   type="submit"
-//   onChange={(e) => setInput(e.target.value)}
-// />
-// <button onSubmit={onSearchSubmit} type="submit">
-//   Search keyword
-// </button>
-// </form>
-
-// => {
-//   if (doc.data().term !== input) {
-//     db.collection("terms").add({
-//       term: input,
-//     });
-//   }

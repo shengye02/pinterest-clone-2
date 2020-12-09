@@ -1,21 +1,12 @@
-.userboards__header {
+.app__body {
+  background-color: white;
   display: flex;
-  background-color: yellow;
-  height: 235px;
   justify-content: center;
-}
-.userboards__header__container {
-  background-color: green;
-  display: flex;
-  flex-direction: column;
-}
-.userboards__header__tools {
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
+  height: 100%;
 }
 
 .userboards {
-  background-color: pink;
   display: flex;
   flex-wrap: wrap;
   height: 100%;

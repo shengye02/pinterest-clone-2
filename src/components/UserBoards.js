@@ -4,29 +4,20 @@ import "./Pin.css";
 import Pin from "./Pin";
 
 function UserBoards(props) {
-  console.log(props, "what is in props at UserBOrads");
-  console.log("hello you are at the UserBoards");
+  let { boards } = props;
+
+  const createBoard = (board) => {
+    console.log(board, "hello new board!");
+  };
   return (
-    <div>
-      <div className="userboards__header">
-        <div className="userboards__header__container">
-          <h1>HELLO</h1>
-          <h1>HELLO</h1>
-          <h1>HELLO</h1>
-          <h1>HELLO</h1>
-        </div>
+    <div className="app__body">
+      <div className="userboards">
+        <h1>One Board here!</h1>
+        {boards.map((board) => {
+          console.log(board, "what is board here in UserBoards");
+          //   return <Board key={image.id} boardedPins={boardedPins} />;
+        })}
       </div>
-      <div className="userboards__header__tools">
-        <div className="userboards__header__tools left">
-          <h1>Icon</h1>
-          <h1>Icon</h1>
-        </div>
-        <div className="userboards__header__tools right">
-          <h1>Icon</h1>
-          <h1>Icon</h1>
-        </div>
-      </div>
-      <div className="userboards"></div>
     </div>
   );
 }

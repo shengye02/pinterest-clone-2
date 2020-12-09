@@ -6,12 +6,17 @@ import Pin from "./Pin";
 const Mainboard = (props) => {
   const { pins } = props;
 
+  const submitBoard = () => {
+    console.log("at mainboard now");
+    props.getBoards();
+  };
   return (
-    <div className="mainboard">
-      <h1> HELLO MAINBOARD</h1>
-      {/* {pins.map((image) => {
-        return <Pin key={image.id} image={image} />;
-      })} */}
+    <div className="app__body">
+      <div className="mainboard">
+        {pins.map((image) => {
+          return <Pin onSubmit={submitBoard} key={image.id} image={image} />;
+        })}
+      </div>
     </div>
   );
 };

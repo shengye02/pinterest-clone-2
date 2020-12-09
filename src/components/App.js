@@ -6,9 +6,11 @@ import UserBoards from "./UserBoards";
 import unsplash from "../api/unsplash";
 import db from "../firebase";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import UserProfileHeader from "./UserProfileHeader";
 
 function App() {
   const [pins, setNewPins] = useState([]);
+  const [boards, setBoards] = useState([]);
 
   const makeAPICall = (term) => {
     return unsplash.get("https://api.unsplash.com/search/photos", {
@@ -17,7 +19,6 @@ function App() {
   };
 
   const onSearchSubmit = (term) => {
-    console.log(term, "what is in term?");
     let promises = [];
     let searchedPins = [];
     promises.push(
@@ -63,8 +64,20 @@ function App() {
     });
   };
 
+  const getMyBoards = () => {
+    console.log("now at App");
+    let boards = [];
+    db.collection("boards").onSnapshot((snapshot) => {
+      snapshot.doc.map((board) => {
+        boards.push(board.data());
+      });
+    });
+    setBoards(boards);
+  };
+
   useEffect(() => {
     getMyNewPins();
+    getMyBoards();
   }, []);
 
   return (
@@ -72,20 +85,14 @@ function App() {
       <Router>
         <Switch>
           <Route path="/mainboard">
-            <div className="app__header">
-              <Header onSubmit={onSearchSubmit} />
-            </div>
-            <div className="app__body">
-              <Mainboard pins={pins} />
-            </div>
+            <Header onSubmit={onSearchSubmit} />
+            <Mainboard getBoards={getMyBoards} pins={pins} />
           </Route>
           <Route path="/userBoards">
-            <div className="app__header">
-              <Header onSubmit={onSearchSubmit} />
-            </div>
-            <div className="app__body">
-              <UserBoards pins={pins} />
-            </div>
+            <Header onSubmit={onSearchSubmit} />
+            <UserProfileHeader />
+            {/* UserBoards needs the already pinned boardPin */}
+            <UserBoards boards={boards} />
           </Route>
         </Switch>
       </Router>
@@ -94,36 +101,3 @@ function App() {
 }
 
 export default App;
-
-// focus first on Mainboard loading up;
-// so useEffect
-// last ten searchTerms
-// make APIcalls for those searchTerms
-// collect all those images in 1 one array
-// then sent them to the MainBoard in shuffled order.
-// so they will be displayed in a shuffled order.
-
-// let newPins = [];
-//     let test = [];
-//     db.collection("terms").onSnapshot((snapshot) =>
-//       snapshot.docs.map((doc) => {
-//         let test = newPins.push(doc.data().term);
-//       })
-//     );
-//     console.log(test, "what is in newPins upon loading?");
-
-// promises.push(
-//   makeAPICAll(doc.data().term).then((res) => {
-//     pinsData.push({
-//       id: doc.id,
-//       data: doc.data(),
-//       info: res.data,
-//     });
-//   })
-// );
-
-// wat moet newPins worden?
-// laatste tien searchTerms
-// daarvan alle api calls doen
-// dit resultaat in een array stoppen en shufflene.
-// dan const newPins met als value deze array zetten zodat het in het Moodboard te zien is.
