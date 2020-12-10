@@ -7,7 +7,6 @@ const Mainboard = (props) => {
   const { pins } = props;
 
   const submitBoard = () => {
-    console.log("at mainboard now");
     props.getBoards();
   };
   return (

@@ -6,7 +6,6 @@ import CreateBoardModal from "./CreateBoardModal";
 import db from "../firebase";
 
 function Pin(props) {
-  console.log(props, "which propsat Pins am I gietting here?");
   const { image } = props;
   const { urls, height } = image;
   const [clickOpen, setClickOpen] = useState(false);
@@ -24,12 +23,10 @@ function Pin(props) {
   }
 
   const onClick = () => {
-    console.log("clicking pin drow down left");
     setClickOpen((openState) => !openState);
   };
 
   const createBoardModalOpen = () => {
-    console.log("Modal Open To Create Board");
     setModalOpen((openState) => !openState);
   };
 
@@ -47,7 +44,7 @@ function Pin(props) {
   };
 
   return (
-    <div className="pins">
+    <div className="pin">
       {height >= 4000 ? (
         <div className="pin__containerMedium" key={image.id}>
           <img
@@ -55,8 +52,8 @@ function Pin(props) {
             className="image"
           />
           <div className="layer">
-            <div class="pin__boards__menu">
-              <div class="pin__boards__menu left">
+            <div className="pin__boards__menu">
+              <div className="pin__boards__menu left">
                 <div className="pin__boards__menuDetails">
                   <h1>Boards</h1>
                   <KeyboardArrowDownIcon onClick={onClick} />
@@ -91,7 +88,7 @@ function Pin(props) {
                   </div>
                 ) : null}
               </div>
-              <div class="pin__boards__menu right">
+              <div className="pin__boards__menu right">
                 <div className="pin__boards__menuDetails">
                   <h1>Save</h1>
                 </div>
@@ -109,8 +106,8 @@ function Pin(props) {
             className="image"
           />
           <div className="layer">
-            <div class="pin__boards__menu">
-              <div class="pin__boards__menu left">
+            <div className="pin__boards__menu">
+              <div className="pin__boards__menu left">
                 <div className="pin__boards__menuDetails">
                   <h1>Boards</h1>
                   <KeyboardArrowDownIcon onClick={onClick} />

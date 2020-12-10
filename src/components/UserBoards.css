@@ -6,173 +6,173 @@
   height: 100%;
 }
 
-.userboards {
+.userboard {
   display: flex;
   flex-wrap: wrap;
   height: 100%;
 }
 
 @media (min-width: 0px) and (max-width: 755px) {
-  .userboards {
+  .userboard {
     width: 504px;
   }
 }
 
 @media (min-width: 756px) and (max-width: 1007px) {
-  .userboards {
+  .userboard {
     width: 756px;
   }
 }
 
 @media (min-width: 1008px) and (max-width: 1259px) {
-  .userboards {
+  .userboard {
     width: 1008px;
   }
 }
 
 @media (min-width: 1260px) and (max-width: 1511px) {
-  .userboards {
+  .userboard {
     width: 1260px;
   }
 }
 
 @media (min-width: 1512px) and (max-width: 1763px) {
-  .userboards {
+  .userboard {
     width: 1512px;
   }
 }
 
 @media (min-width: 1764px) and (max-width: 2015px) {
-  .userboards {
+  .userboard {
     width: 1764px;
   }
 }
 
 @media (min-width: 2016px) and (max-width: 2267px) {
-  .userboards {
+  .userboard {
     width: 2016px;
   }
 }
 
 @media (min-width: 2268px) and (max-width: 2519px) {
-  .userboards {
+  .userboard {
     width: 2268px;
   }
 }
 
 @media (min-width: 2520px) and (max-width: 2771px) {
-  .userboards {
+  .userboard {
     width: 2520px;
   }
 }
 
 @media (min-width: 2772px) and (max-width: 3023px) {
-  .userboards {
+  .userboard {
     width: 2772px;
   }
 }
 
 @media (min-width: 3024px) and (max-width: 3275px) {
-  .userboards {
+  .userboard {
     width: 3024px;
   }
 }
 
 @media (min-width: 3276px) and (max-width: 3527px) {
-  .userboards {
+  .userboard {
     width: 3276px;
   }
 }
 
 @media (min-width: 3528px) and (max-width: 3779px) {
-  .userboards {
+  .userboard {
     width: 3528px;
   }
 }
 
 @media (min-width: 3780px) and (max-width: 4031px) {
-  .userboards {
+  .userboard {
     width: 3780px;
   }
 }
 
 @media (min-width: 4032px) and (max-width: 4283px) {
-  .userboards {
+  .userboard {
     width: 4032px;
   }
 }
 
 @media (min-width: 4284px) and (max-width: 4535px) {
-  .userboards {
+  .userboard {
     width: 4284px;
   }
 }
 
 @media (min-width: 4536px) and (max-width: 4787px) {
-  .userboards {
+  .userboard {
     width: 4536px;
   }
 }
 
 @media (min-width: 4788px) and (max-width: 5039px) {
-  .userboards {
+  .userboard {
     width: 4788px;
   }
 }
 
 @media (min-width: 5040px) and (max-width: 5291px) {
-  .userboards {
+  .userboard {
     width: 5040px;
   }
 }
 
 @media (min-width: 5292px) and (max-width: 5543px) {
-  .userboards {
+  .userboard {
     width: 5292px;
   }
 }
 
 @media (min-width: 5544) and (max-width: 5795px) {
-  .userboards {
+  .userboard {
     width: 5544px;
   }
 }
 
 @media (min-width: 5796px) and (max-width: 6047px) {
-  .userboards {
+  .userboard {
     width: 5796px;
   }
 }
 
 @media (min-width: 6048px) and (max-width: 6299px) {
-  .userboards {
+  .userboard {
     width: 6048px;
   }
 }
 
 @media (min-width: 6300px) and (max-width: 6551px) {
-  .userboards {
+  .userboard {
     width: 6300px;
   }
 }
 @media (min-width: 6552px) and (max-width: 6803px) {
-  .userboards {
+  .userboard {
     width: 6552px;
   }
 }
 
 @media (min-width: 6804px) and (max-width: 7055px) {
-  .userboards {
+  .userboard {
     width: 6804px;
   }
 }
 @media (min-width: 7056px) and (max-width: 7307px) {
-  .userboards {
+  .userboard {
     width: 7056px;
   }
 }
 @media (min-width: 7308px) and (max-width: 7559px) {
-  .userboards {
+  .userboard {
     width: 7308px;
   }
 }

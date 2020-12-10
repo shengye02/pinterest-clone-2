@@ -27,7 +27,6 @@ function App() {
       })
     );
     Promise.all(promises).then(() => {
-      console.log(searchedPins, "what is in searchedPins?");
       setNewPins(searchedPins);
     });
   };
@@ -65,11 +64,13 @@ function App() {
   };
 
   const getMyBoards = () => {
-    console.log("now at App");
     let boards = [];
     db.collection("boards").onSnapshot((snapshot) => {
-      snapshot.doc.map((board) => {
-        boards.push(board.data());
+      snapshot.docs.map((doc) => {
+        boards.push({
+          id: doc.id,
+          data: doc.data(),
+        });
       });
     });
     setBoards(boards);
