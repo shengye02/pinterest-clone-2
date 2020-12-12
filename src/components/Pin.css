@@ -252,25 +252,29 @@
 
 .modal__content {
   background-color: white;
-  border-radius: 16px;
+  border-radius: 32px;
   margin: 15% auto; /* 15% from the top and centered */
-  padding: 15px;
   border: 1px solid #888;
+  /* padding: 15px; */
   width: 80%; /* Could be more or less, depending on screen size */
   height: 80%;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 .modal__content__intro {
   text-align: center;
   font-size: 14px;
-  padding: 10px;
+  padding: 15px;
 }
 
 .modal__content__boardDetails {
   margin-top: 10px;
   display: flex;
+  flex: 1;
   width: 100%;
   height: content-fit;
+  padding: 15px;
 }
 
 .modal__left {
@@ -278,6 +282,14 @@
   flex: 0.5;
   flex-direction: column;
 }
+
+.modal__left > img {
+  object-fit: cover;
+  width: 236px;
+  height: 236px;
+  border-radius: 16px;
+}
+
 .modal_right__intro > p {
   font-size: 14px;
   padding-bottom: 10px;
@@ -287,6 +299,7 @@
   display: flex;
   flex: 0.5;
   flex-direction: column;
+  padding-right: 50px;
 }
 
 .modal__right__input {
@@ -330,4 +343,40 @@
 
 .modal__right__inputContainer > form > button {
   display: none;
+}
+
+.modal__content__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+  box-sizing: border-box;
+  height: 60px;
+}
+
+.modal__content__buttons > button {
+  font-size: 18px;
+  color: #111;
+  background-color: #efefef;
+  border: none;
+  border-radius: 16px;
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  margin: 20px;
+  padding: 8px;
+}
+
+.modal__content__buttons > button:focus {
+  outline: none;
+}
+
+.modal__content__buttons > button:focus {
+  outline: none;
+}
+
+.modal__content__buttons > button:focus {
+  outline: none;
 }

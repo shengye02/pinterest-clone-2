@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -6,15 +6,15 @@ import CreateBoardModal from "./CreateBoardModal";
 import db from "../firebase";
 
 function Pin(props) {
-  const { image } = props;
-  const { urls, height } = image;
+  let { id, description, height, urls } = props;
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [board, setBoard] = useState("");
+  // const [clickedOutside, setClickedOutside] = useState(false);
+  const myRef = useRef();
 
-  let description = "";
-  if (image.description) {
-    description = image.description;
+  if (description) {
+    description = description;
   }
 
   if (description && description.length > 37) {
@@ -26,12 +26,14 @@ function Pin(props) {
     setClickOpen((openState) => !openState);
   };
 
-  const createBoardModalOpen = () => {
+  const createBoardModalOpen = (id) => {
     setModalOpen((openState) => !openState);
   };
 
   const submitBoard = (e) => {
     e.preventDefault();
+    //Begin hier zondag :)
+    console.log("hello submitting board");
     props.onSubmit(board);
     if (board) {
       db.collection("boards").add({
@@ -43,14 +45,22 @@ function Pin(props) {
     // and will be used in App.js to getNewPins at refreshing of the page.
   };
 
+  const clickOutside = (e) => {
+    if (!myRef.current.contains(e.target)) {
+      setModalOpen(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // });
+
   return (
     <div className="pin">
       {height >= 4000 ? (
-        <div className="pin__containerMedium" key={image.id}>
-          <img
-            src={urls?.regular ? urls.full : "No picture available"}
-            className="image"
-          />
+        <div className="pin__containerMedium" key={id}>
+          <img src={urls?.regular ? urls.full : urls} className="image" />
           <div className="layer">
             <div className="pin__boards__menu">
               <div className="pin__boards__menu left">
@@ -100,7 +110,7 @@ function Pin(props) {
           </div>
         </div>
       ) : (
-        <div className="pin__containerSmall" key={image.id}>
+        <div className="pin__containerSmall" key={id}>
           <img
             src={urls?.regular ? urls.full : "No picture available"}
             className="image"
@@ -148,14 +158,18 @@ function Pin(props) {
         </div>
       )}
       {modalOpen ? (
-        <div className="modal">
-          <div className="modal__content">
+        <div className="modal" onClick={clickOutside}>
+          <div className="modal__content" ref={myRef}>
             <div className="modal__content__intro">
-              <h1> Create a board</h1>
+              <h1> Create a board with id</h1>
             </div>
             <div className="modal__content__boardDetails">
               <div className="modal__left">
-                <h1> PIN that you pinned</h1>
+                <img
+                  src={urls?.regular ? urls.full : urls}
+                  alt="Picture"
+                  className="image"
+                />
               </div>
               <div className="modal__right">
                 <div className="modal_right__intro">
@@ -174,6 +188,11 @@ function Pin(props) {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="modal__content__buttons">
+              <button>Cancel</button>
+              <button onClick={submitBoard}> Create</button>
+              {/* // how to make this button red when form has */}
             </div>
           </div>
         </div>

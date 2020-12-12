@@ -1,38 +1,43 @@
 import React, { useEffect, useState } from "react";
 import db from "../firebase";
 import "./Board.css";
+import { Link } from "react-router-dom";
+import { CollectionsBookmarkOutlined } from "@material-ui/icons";
 
-function Board(props) {
+const Board = (props) => {
   const { board } = props;
-  const [pins, setPinsBoard] = useState();
+  const [boardPins, setPinsBoard] = useState();
 
   useEffect(() => {
-    db.collection("boards")
-      .doc(board.id)
-      .collection("pins")
-      .orderBy("timestamp", "asc")
-      .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => setPinsBoard(doc.data()));
-      });
-  }, [board]);
+    if (board.id) {
+      db.collection("boards")
+        .doc(board.id)
+        .collection("pins")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) =>
+          snapshot.docs.map((doc) => console.log(doc.data()))
+        );
+    }
+  }, [board.id]);
 
-  console.log(pins, "what is in pins now?");
   return (
     <div className="board__container" key={board.id}>
       <img
-        src="https://www.nme.com/wp-content/uploads/2020/04/rick-and-morty-season-4.jpg"
-        alt="RickAndMorty"
+        src={
+          boardPins?.[0].image ? boardPins?.[0].urls : "No picture available"
+        }
+        alt="picture-board"
         className="image"
       />
-      <div className="board__container__info">
-        <h1> {board.data?.name}</h1>
-        <p> {pins?.length > 0 ? pins.length + "pins" : "0 pins"}</p>
-      </div>
-      {/* // whenever you click on Board, then you can see all the pins there
-      accumulated of that board. // different component though - like BoardPage. */}
+      <Link to={`/boardPage/${board.id}`}>
+        <div className="board__container__info">
+          <h1> {board.data?.name}</h1>
+          <p>{boardPins?.length > 0 ? boardPins.length + " pins" : "0 pins"}</p>
+        </div>
+      </Link>
     </div>
   );
-}
+};
 
 export default Board;
 

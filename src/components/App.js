@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Header";
 import Mainboard from "./Mainboard";
-import UserBoards from "./UserBoards";
+import UserBoard from "./UserBoard";
 import unsplash from "../api/unsplash";
 import db from "../firebase";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import UserProfileHeader from "./UserProfileHeader";
+import BoardPage from "./BoardPage";
 
 function App() {
   const [pins, setNewPins] = useState([]);
@@ -87,13 +87,15 @@ function App() {
         <Switch>
           <Route path="/mainboard">
             <Header onSubmit={onSearchSubmit} />
-            <Mainboard getBoards={getMyBoards} pins={pins} />
+            <Mainboard pins={pins} getBoards={getMyBoards} />
           </Route>
-          <Route path="/userBoards">
+          <Route path="/userBoard">
             <Header onSubmit={onSearchSubmit} />
-            <UserProfileHeader />
-            {/* UserBoards needs the already pinned boardPin */}
-            <UserBoards boards={boards} />
+            <UserBoard boards={boards} />
+          </Route>
+          <Route path="/boardPage/:boardId">
+            <Header onSubmit={onSearchSubmit} />
+            <BoardPage />
           </Route>
         </Switch>
       </Router>

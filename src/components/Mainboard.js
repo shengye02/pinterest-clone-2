@@ -9,11 +9,23 @@ const Mainboard = (props) => {
   const submitBoard = () => {
     props.getBoards();
   };
+
   return (
     <div className="app__body">
       <div className="mainboard">
         {pins.map((image) => {
-          return <Pin onSubmit={submitBoard} key={image.id} image={image} />;
+          let { id, description, height, term, urls } = image;
+          return (
+            <Pin
+              onSubmit={submitBoard}
+              key={image.id}
+              id={id}
+              description={description}
+              height={height}
+              term={term}
+              urls={urls}
+            />
+          );
         })}
       </div>
     </div>
