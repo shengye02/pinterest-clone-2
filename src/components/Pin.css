@@ -65,19 +65,15 @@
   text-align: center;
 }
 
-.layer small {
-  background-color: yellow;
-}
-
 .pin__containerSmall:hover .image {
-  opacity: 0.3;
+  opacity: 0.7;
 }
 .pin__containerSmall:hover .layer {
   opacity: 1;
 }
 
 .pin__containerMedium:hover .image {
-  opacity: 0.3;
+  opacity: 0.7;
 }
 .pin__containerMedium:hover .layer {
   opacity: 1;
@@ -111,7 +107,8 @@
   align-items: center;
   width: 200px;
   height: 20px;
-  z-index: 50;
+  position: relative;
+  z-index: 1;
 }
 
 .pin__boards__menu .left {
@@ -119,7 +116,7 @@
   display: inline-block;
   flex: 0.6;
   background-color: white;
-  opacity: 0.7;
+  opacity: 1;
   border-radius: 12px 0px 0px 12px;
   margin: 0;
 }
@@ -131,15 +128,15 @@
   left: 50% !important;
   background-color: white;
   border-radius: 16px;
-  opacity: 1;
   transform: translate(-50%, 0) !important;
   width: 320px;
-  height: 247px;
+  height: 220px;
   color: black;
   box-sizing: border-box;
   margin-top: 14px;
   z-index: 200;
   font-size: 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 }
 
 .pin__boards__menu .right {
@@ -238,9 +235,8 @@
 }
 
 .modal {
-  display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -290,11 +286,6 @@
   border-radius: 16px;
 }
 
-.modal_right__intro > p {
-  font-size: 14px;
-  padding-bottom: 10px;
-}
-
 .modal__right {
   display: flex;
   flex: 0.5;
@@ -302,46 +293,33 @@
   padding-right: 50px;
 }
 
-.modal__right__input {
-  height: 40px;
-  background-color: white;
+.modal_right__intro > p {
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+.modal__right > form > input {
   display: flex;
   align-items: center;
+  height: 40px;
   width: 400px;
   border-radius: 16px;
   padding: 5px;
   border: 1px solid lightgrey;
   margin-left: 0;
-}
-
-.header__searchContainer > form {
-  flex: 1;
-  display: flex;
-}
-
-.modal__right__inputContainer > form > input {
-  border: none;
-  width: 375px;
-  margin-left: 5px;
   margin-right: 10px;
   color: black;
   font-size: 16px;
   background-color: transparent;
 }
 
-.modal__right__inputContainer > form > input:focus {
+.modal__right > form > input:focus {
   outline: none;
+  border-color: #93c4ff;
+  box-shadow: 0 0 1px 4px #93c4ff;
 }
 
-.modal__right__inputContainer > form > input:active {
-  outline: none;
-}
-
-.modal__right__inputContainer > form > input:hover {
-  outline: none;
-}
-
-.modal__right__inputContainer > form > button {
+.modal__right > form > button {
   display: none;
 }
 
@@ -379,4 +357,20 @@
 
 .modal__content__buttons > button:focus {
   outline: none;
+}
+
+.alert__boardsubmitted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  height: 100%;
+}
+
+.alert__boardsubmitted__container {
+  color: black;
+  border: none;
+  box-shadow: 0 0 1px 4px #e60023;
+  border-radius: 16px;
+  padding: 30px;
 }

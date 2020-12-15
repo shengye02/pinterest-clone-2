@@ -1,21 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CreateBoardModal from "./CreateBoardModal";
 import db from "../firebase";
+import { Link } from "react-router-dom";
+import firebase from "firebase";
+import { SignalCellularConnectedNoInternet0BarOutlined } from "@material-ui/icons";
 
 function Pin(props) {
   let { id, description, height, urls } = props;
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [board, setBoard] = useState("");
-  // const [clickedOutside, setClickedOutside] = useState(false);
+  const [boardName, setBoard] = useState("");
+  const [boardSubmitted, setNewBoard] = useState(false);
+  const [warning, setWarning] = useState(false);
   const myRef = useRef();
-
-  if (description) {
-    description = description;
-  }
 
   if (description && description.length > 37) {
     let sentence = description.split(".");
@@ -30,19 +30,49 @@ function Pin(props) {
     setModalOpen((openState) => !openState);
   };
 
+  const isValid = (boardName) => {
+    let boardNameIsEmpty = boardName == " " || boardName == "";
+    if (boardNameIsEmpty) {
+      return true;
+    }
+
+    // check if board is duplicate
+    let promises = [];
+    let double = db
+      .collection("boards")
+      .where("name", "==", boardName)
+      .get()
+      .then(function (querySnapshot) {
+        promises.push(
+          querySnapshot.forEach(function (doc) {
+            double.push(doc.data());
+          })
+        );
+      });
+    Promise.all(promises).then(() => {
+      if (double.length > 0) {
+        setBoard(boardName);
+      }
+      console.log(promises, "what is in promises?");
+    });
+  };
+
   const submitBoard = (e) => {
     e.preventDefault();
-    //Begin hier zondag :)
-    console.log("hello submitting board");
-    props.onSubmit(board);
-    if (board) {
-      db.collection("boards").add({
-        name: board,
-      });
+
+    if (isValid(boardName)) {
+      // add board here
+      console.log("returning true");
+    } else {
+      console.log(boardName, "which name was not good");
+      alert("your board was empty or the name already exists");
+      setWarning(boardName);
+      // warning to try again
     }
-    // function in here where duplicate input is not allowed;
-    // previous input will be deleted so that last input (same term) will remain
-    // and will be used in App.js to getNewPins at refreshing of the page.
+
+    props.onSubmit(boardName);
+
+    // setStatusNewBoard((showState) => !showState);
   };
 
   const clickOutside = (e) => {
@@ -51,16 +81,15 @@ function Pin(props) {
     }
   };
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // });
-
   return (
     <div className="pin">
       {height >= 4000 ? (
         <div className="pin__containerMedium" key={id}>
-          <img src={urls?.regular ? urls.full : urls} className="image" />
+          <img
+            src={urls?.regular ? urls.full : urls}
+            className="image"
+            alt="medium"
+          />
           <div className="layer">
             <div className="pin__boards__menu">
               <div className="pin__boards__menu left">
@@ -79,8 +108,6 @@ function Pin(props) {
                             type="text"
                             onChange={(e) => console.log(e)}
                           />
-                          {/* <button onClick={} type="submit">
-                        </button> */}
                         </form>
                       </div>
                     </div>
@@ -114,6 +141,7 @@ function Pin(props) {
           <img
             src={urls?.regular ? urls.full : "No picture available"}
             className="image"
+            alt="small"
           />
           <div className="layer">
             <div className="pin__boards__menu">
@@ -161,13 +189,13 @@ function Pin(props) {
         <div className="modal" onClick={clickOutside}>
           <div className="modal__content" ref={myRef}>
             <div className="modal__content__intro">
-              <h1> Create a board with id</h1>
+              <h1> Create a board</h1>
             </div>
             <div className="modal__content__boardDetails">
               <div className="modal__left">
                 <img
                   src={urls?.regular ? urls.full : urls}
-                  alt="Picture"
+                  alt="modal"
                   className="image"
                 />
               </div>
@@ -175,24 +203,41 @@ function Pin(props) {
                 <div className="modal_right__intro">
                   <p> Name</p>
                 </div>
-                <div className="modal__right__input">
-                  <div className="modal__right__inputContainer">
-                    <form>
-                      <input
-                        type="text"
-                        value={board}
-                        onChange={(e) => setBoard(e.target.value)}
-                      />
-                      <button onClick={submitBoard} type="submit"></button>
-                    </form>
-                  </div>
-                </div>
+                <form>
+                  <input
+                    type="text"
+                    value={boardName}
+                    onChange={(e) => setBoard(e.target.value)}
+                  />
+                  <button onClick={submitBoard} type="submit"></button>
+                </form>
               </div>
             </div>
+            {boardSubmitted && (
+              <div className="alert__boardsubmitted">
+                <div className="alert__boardsubmitted__container">
+                  <h1> Yeah! You created a new board named: {boardName} </h1>
+                  {/* <Link to={`/boardPage/${board?.id}`}>
+                    <h1> Go to board here </h1>
+                  </Link> */}
+                </div>
+              </div>
+            )}
+            {warning && (
+              <div className="alert__boardsubmitted">
+                <div className="alert__boardsubmitted__container">
+                  <h1>
+                    Either your board name is empty or this board already
+                    exists: {boardName}
+                  </h1>
+                </div>
+              </div>
+            )}
             <div className="modal__content__buttons">
-              <button>Cancel</button>
-              <button onClick={submitBoard}> Create</button>
-              {/* // how to make this button red when form has */}
+              <button onClick={createBoardModalOpen}>Cancel</button>
+              <button onClick={submitBoard} type="submit">
+                Create
+              </button>
             </div>
           </div>
         </div>
@@ -202,3 +247,45 @@ function Pin(props) {
 }
 
 export default Pin;
+
+// if (boardName) {
+//   let double = db
+//     .collection("boards")
+//     .where("name", "==", boardName)
+//     .get()
+//     .then((snapshot) => {
+//       console.log(snapshot, "which id or board have the same names");
+//       // setWarningDuplicate(true);
+//     });
+//   console.log(double, "is there a double board her?");
+// } else {
+//   console.log("add board");
+//   db.collection("boards").add({
+//     name: boardName,
+//   });
+// }
+
+//Submiting a new board - few checks;
+// you cannot file an empty name as bord
+// you cannot add another board with the same name;
+// when succesfully adding a board, you get a notification with the new board and
+// a link with the correct boardId to the new board page where you can see your pin.
+
+// work on not able to put a board in it with the same name
+// ==> then also validator/
+// also add the first pin to this board.
+// wait till this is done and then get the idea and all the information.
+
+// function in here where duplicate input is not allowed;
+// previous input will be deleted so that last input (same term) will remain
+// and will be used in App.js to getNewPins at refreshing of the page.
+
+// let test1 = db
+//         .collection("boards")
+//         .get()
+//         .then(function (querySnapshot) {
+//           querySnapshot.forEach(function (doc) {
+//             console.log(doc.id, "=>", doc.data());
+//           });
+//         });
+//       console.log(test1, "what is in test 1");
