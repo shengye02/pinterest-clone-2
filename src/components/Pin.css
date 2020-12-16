@@ -164,6 +164,18 @@
   background-color: #e2e2e2;
 }
 
+.pin__dropdown__searchContainer:active {
+  outline: none;
+  border-color: #93c4ff;
+  box-shadow: 0 0 1px 4px #93c4ff;
+}
+
+.pin__dropdown__searchContainer:focus {
+  outline: none;
+  border-color: #93c4ff;
+  box-shadow: 0 0 1px 4px #93c4ff;
+}
+
 .pin__dropdown__searchContainer > .MuiSvgIcon-root {
   color: #767676;
 }
@@ -197,6 +209,10 @@
   display: none;
 }
 
+.modal__right > form > input:focus .dropdown__existing__boards {
+  background-color: yellow;
+}
+
 .pin__dropdown__createBoard {
   background-color: white;
   padding: 10px;
@@ -216,4 +232,8 @@
 .pin__dropdown__createBoard > p {
   font-size: 16px;
   font-weight: bold;
+}
+
+.dropdown__existing__boards {
+  background-color: yellow;
 }

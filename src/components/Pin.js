@@ -32,6 +32,11 @@ const Pin = (props) => {
     setModalOpen(false);
   };
 
+  const searchBoard = (e) => {
+    console.log("searching an existing board");
+    console.log(e.target.value, " what is in e target alue");
+  };
+
   let sizePin = "small";
   if (height >= 4000) {
     sizePin = "medium";
@@ -70,8 +75,12 @@ const Pin = (props) => {
                             <input
                               placeholder="Search"
                               type="text"
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => console.log(e.target.value)}
                             />
+                            {/* <button onClick="hello" type="submit"></button> */}
+                            {/* <div className="dropdown__existing__boards">
+                              <h1> Hello existing bords</h1>
+                            </div> */}
                           </form>
                         </div>
                       </div>

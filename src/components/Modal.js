@@ -94,7 +94,7 @@ const Modal = (props) => {
             />
           </div>
           <div className="modal__right">
-            <div className="modal_right__intro">
+            <div className="modal__right__intro">
               <p> Name</p>
             </div>
             <form>
