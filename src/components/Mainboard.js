@@ -24,6 +24,7 @@ const Mainboard = (props) => {
               height={height}
               term={term}
               urls={urls}
+              page="mainBoard"
             />
           );
         })}

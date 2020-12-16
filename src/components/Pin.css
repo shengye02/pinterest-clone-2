@@ -2,37 +2,40 @@
   height: fit-content;
 }
 
-.pin__containerMedium {
+.pin__container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 8px 16px 8px;
   background-color: white;
   box-sizing: border-box;
+}
+
+.pin__container .medium {
   width: 252px;
   height: 418px;
 }
 
-.pin__containerMedium > img {
+.pin__container > img {
   display: flex;
   cursor: zoom-in;
   border-radius: 16px;
   object-fit: cover;
+}
+
+.pin__container .medium > img {
   width: 236px;
   height: 354px;
 }
 
-.pin__containerSmall {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px 8px 16px 8px;
-  background-color: white;
-  box-sizing: border-box;
+.pin__container .small {
   width: 252px;
   height: 292px;
+}
+
+.pin__container .small > img {
+  width: 236px;
+  height: 236px;
 }
 
 .image {
@@ -42,15 +45,6 @@
   height: auto;
   transition: 0.5s ease;
   backface-visibility: hidden;
-}
-
-.pin__containerSmall > img {
-  display: flex;
-  cursor: zoom-in;
-  border-radius: 16px;
-  object-fit: cover;
-  width: 236px;
-  height: 236px;
 }
 
 .layer {
@@ -64,22 +58,13 @@
   text-align: center;
 }
 
-.pin__containerSmall:hover .image {
+.pin__container:hover .image {
   opacity: 0.7;
 }
-.pin__containerSmall:hover .layer {
+.pin__container:hover .layer {
   opacity: 1;
 }
 
-.pin__containerMedium:hover .image {
-  opacity: 0.7;
-}
-.pin__containerMedium:hover .layer {
-  opacity: 1;
-}
-
-.img__buttons {
-}
 .pin__img__container > img:hover .img__buttons {
   color: #262626;
 }
