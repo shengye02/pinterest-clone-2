@@ -1,12 +1,12 @@
 import React from "react";
-import "./UserProfileHeader.css";
+import "./UserBoardHeader.css";
 import CreateIcon from "@material-ui/icons/Create";
 import { IconButton } from "@material-ui/core";
 import VerticalAlignTopIcon from "@material-ui/icons/VerticalAlignTop";
 import SortIcon from "@material-ui/icons/Sort";
 import AddIcon from "@material-ui/icons/Add";
 
-function UserProfileHeader() {
+function UserBoardHeader() {
   return (
     <div>
       <div className="userboards__header">
@@ -45,4 +45,4 @@ function UserProfileHeader() {
   );
 }
 
-export default UserProfileHeader;
+export default UserBoardHeader;

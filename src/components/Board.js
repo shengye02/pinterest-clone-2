@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import db from "../firebase";
 import "./Board.css";
 import { Link } from "react-router-dom";
-import { CollectionsBookmarkOutlined } from "@material-ui/icons";
 
 const Board = (props) => {
   const { board } = props;

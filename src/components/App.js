@@ -65,14 +65,17 @@ function App() {
 
   const getMyBoards = () => {
     let boards = [];
-    db.collection("boards").onSnapshot((snapshot) => {
-      snapshot.docs.map((doc) => {
-        boards.push({
-          id: doc.id,
-          data: doc.data(),
+    db.collection("boards")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => {
+          boards.push({
+            id: doc.id,
+            data: doc.data(),
+          });
         });
       });
-    });
+    console.log(boards, " what is in boards?");
     setBoards(boards);
   };
 
@@ -93,7 +96,7 @@ function App() {
             <Header onSubmit={onSearchSubmit} />
             <UserBoard boards={boards} />
           </Route>
-          <Route path="/boardPage/:boardId">
+          <Route path="/boardPage/:boardName">
             <Header onSubmit={onSearchSubmit} />
             <BoardPage />
           </Route>

@@ -2,11 +2,9 @@ import React, { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import CreateBoardModal from "./CreateBoardModal";
-import db from "../firebase";
 import { Link } from "react-router-dom";
+import db from "../firebase";
 import firebase from "firebase";
-import { SignalCellularConnectedNoInternet0BarOutlined } from "@material-ui/icons";
 
 function Pin(props) {
   let { id, description, height, urls } = props;
@@ -15,6 +13,7 @@ function Pin(props) {
   const [boardName, setBoard] = useState("");
   const [boardSubmitted, setNewBoard] = useState(false);
   const [warning, setWarning] = useState(false);
+  const [link, setLinkBoardPage] = useState("");
   const myRef = useRef();
 
   if (description && description.length > 37) {
@@ -30,48 +29,47 @@ function Pin(props) {
     setModalOpen((openState) => !openState);
   };
 
+  const addBoard = (boardName) => {
+    if (boardName) {
+      db.collection("boards").add({
+        name: boardName,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      setNewBoard(boardName);
+    }
+  };
+
   const isValid = (boardName) => {
-    let boardNameIsEmpty = boardName == " " || boardName == "";
-    if (boardNameIsEmpty) {
-      return true;
+    if (boardName == " " || boardName == "") {
+      console.log(boardName, "what is in boardName?");
+      return false;
     }
 
-    // check if board is duplicate
     let promises = [];
-    let double = db
-      .collection("boards")
+    let double = [];
+    db.collection("boards")
       .where("name", "==", boardName)
       .get()
       .then(function (querySnapshot) {
-        promises.push(
-          querySnapshot.forEach(function (doc) {
-            double.push(doc.data());
-          })
-        );
+        querySnapshot.forEach(function (doc) {
+          double.push({ id: doc.id, data: doc.data() });
+        });
+      })
+      .then(() => {
+        if (double[0]) {
+          setWarning(boardName);
+        } else {
+          addBoard(boardName);
+          setLinkBoardPage("boardPage/" + boardName);
+        }
       });
-    Promise.all(promises).then(() => {
-      if (double.length > 0) {
-        setBoard(boardName);
-      }
-      console.log(promises, "what is in promises?");
-    });
   };
 
   const submitBoard = (e) => {
     e.preventDefault();
 
-    if (isValid(boardName)) {
-      // add board here
-      console.log("returning true");
-    } else {
-      console.log(boardName, "which name was not good");
-      alert("your board was empty or the name already exists");
-      setWarning(boardName);
-      // warning to try again
-    }
-
+    isValid(boardName);
     props.onSubmit(boardName);
-
     // setStatusNewBoard((showState) => !showState);
   };
 
@@ -114,13 +112,6 @@ function Pin(props) {
                     <div className="pin__dropdown__createBoard">
                       <AddCircleIcon onClick={createBoardModalOpen} />
                       <p> Create board</p>
-                    </div>
-                  </div>
-                ) : null}
-                {modalOpen ? (
-                  <div className="modal__popup">
-                    <div className="modal__popup__content">
-                      <CreateBoardModal />
                     </div>
                   </div>
                 ) : null}
@@ -215,17 +206,15 @@ function Pin(props) {
             </div>
             {boardSubmitted && (
               <div className="alert__boardsubmitted">
-                <div className="alert__boardsubmitted__container">
-                  <h1> Yeah! You created a new board named: {boardName} </h1>
-                  {/* <Link to={`/boardPage/${board?.id}`}>
-                    <h1> Go to board here </h1>
-                  </Link> */}
+                <div className="alert__boardsubmitted__container__succes">
+                  <h1> Alright! You created a new board named: {boardName} </h1>
+                  <Link to={`/boardPage/` + boardName}>Go to board here</Link>
                 </div>
               </div>
             )}
             {warning && (
               <div className="alert__boardsubmitted">
-                <div className="alert__boardsubmitted__container">
+                <div className="alert__boardsubmitted__container__warning">
                   <h1>
                     Either your board name is empty or this board already
                     exists: {boardName}

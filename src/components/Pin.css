@@ -369,8 +369,24 @@
 
 .alert__boardsubmitted__container {
   color: black;
-  border: none;
+  padding: 30px;
+}
+
+.alert__boardsubmitted__container__warning {
+  padding: 30px;
   box-shadow: 0 0 1px 4px #e60023;
   border-radius: 16px;
+}
+
+.alert__boardsubmitted__container__succes {
   padding: 30px;
+  box-shadow: 0 0 1px 4px green;
+  border-radius: 16px;
+}
+
+.alert__boardsubmitted__container__succes > a {
+  text-decoration: none;
+  color: #e60023;
+  font-size: 24px;
+  font-weight: 800;
 }
