@@ -3,13 +3,13 @@ import AddIcon from "@material-ui/icons/Add";
 import "./BoardHeader.css";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-function BoardHeader() {
+const BoardHeader = (props) => {
   return (
     <div>
       <div className="board__header">
         <div className="board__header__container">
           <div className="board__header__container__intro">
-            <h1> Board Name </h1>
+            <h1> {props?.name} </h1>
             <MoreHorizIcon />
           </div>
           <img
@@ -26,6 +26,6 @@ function BoardHeader() {
       </div>
     </div>
   );
-}
+};
 
 export default BoardHeader;

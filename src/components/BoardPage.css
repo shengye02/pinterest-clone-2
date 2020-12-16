@@ -7,7 +7,6 @@
 }
 
 .boardPage {
-  background-color: yellow;
   display: flex;
   flex-wrap: wrap;
   height: 100%;

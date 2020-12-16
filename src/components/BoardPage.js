@@ -10,6 +10,8 @@ const BoardPage = () => {
   const [boardPins, setBoardPins] = useState();
   const [boardName, setBoardName] = useState();
 
+  console.log(boardId, "what is boardId when rendering");
+
   useEffect(() => {
     if (boardId) {
       db.collection("boards")
@@ -26,14 +28,21 @@ const BoardPage = () => {
     }
   }, [boardId]);
 
-  console.log(boardPins, "what is in boardPins BoardPage");
   return (
     <div>
       <BoardHeader name={boardName} />
       <div className="app__body">
         <div className="boardPage">
-          {boardPins?.map((image) => {
-            return <Pin key={image.id} />;
+          {boardPins?.map((boardPin) => {
+            let { id, description, height, urls } = boardPin;
+            return (
+              <Pin
+                id={id}
+                description={description}
+                height={height}
+                urls={urls}
+              />
+            );
           })}
         </div>
       </div>

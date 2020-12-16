@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import db from "../firebase";
 import firebase from "firebase";
 
-function Pin(props) {
+const Pin = (props) => {
   let { id, description, height, urls } = props;
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -45,6 +45,7 @@ function Pin(props) {
               urls: urls?.regular ? urls.full : urls,
               height: height,
               description: description,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
           console.log(docRef.id, "what is the docRef.id");
           setBoardId(docRef.id);
@@ -82,7 +83,6 @@ function Pin(props) {
 
     isValid(boardName);
     props.onSubmit(boardName);
-    // setStatusNewBoard((showState) => !showState);
   };
 
   const clickOutside = (e) => {
@@ -245,6 +245,6 @@ function Pin(props) {
       ) : null}
     </div>
   );
-}
+};
 
 export default Pin;

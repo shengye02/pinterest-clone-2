@@ -18,7 +18,6 @@ const Mainboard = (props) => {
           return (
             <Pin
               onSubmit={submitBoard}
-              key={image.id}
               id={id}
               description={description}
               height={height}
