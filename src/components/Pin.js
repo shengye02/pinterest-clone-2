@@ -13,7 +13,7 @@ function Pin(props) {
   const [boardName, setBoard] = useState("");
   const [boardSubmitted, setNewBoard] = useState(false);
   const [warning, setWarning] = useState(false);
-  const [link, setLinkBoardPage] = useState("");
+  const [boardId, setBoardId] = useState("");
   const myRef = useRef();
 
   if (description && description.length > 37) {
@@ -31,11 +31,25 @@ function Pin(props) {
 
   const addBoard = (boardName) => {
     if (boardName) {
-      db.collection("boards").add({
-        name: boardName,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-      setNewBoard(boardName);
+      db.collection("boards")
+        .add({
+          name: boardName,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .then(function (docRef) {
+          db.collection("boards")
+            .doc(docRef.id)
+            .collection("pins")
+            .add({
+              id: id,
+              urls: urls?.regular ? urls.full : urls,
+              height: height,
+              description: description,
+            });
+          console.log(docRef.id, "what is the docRef.id");
+          setBoardId(docRef.id);
+          setNewBoard(boardName);
+        });
     }
   };
 
@@ -45,7 +59,6 @@ function Pin(props) {
       return false;
     }
 
-    let promises = [];
     let double = [];
     db.collection("boards")
       .where("name", "==", boardName)
@@ -60,7 +73,6 @@ function Pin(props) {
           setWarning(boardName);
         } else {
           addBoard(boardName);
-          setLinkBoardPage("boardPage/" + boardName);
         }
       });
   };
@@ -208,7 +220,7 @@ function Pin(props) {
               <div className="alert__boardsubmitted">
                 <div className="alert__boardsubmitted__container__succes">
                   <h1> Alright! You created a new board named: {boardName} </h1>
-                  <Link to={`/boardPage/` + boardName}>Go to board here</Link>
+                  <Link to={`/boardPage/${boardId}`}> Go to board here </Link>
                 </div>
               </div>
             )}
@@ -236,45 +248,3 @@ function Pin(props) {
 }
 
 export default Pin;
-
-// if (boardName) {
-//   let double = db
-//     .collection("boards")
-//     .where("name", "==", boardName)
-//     .get()
-//     .then((snapshot) => {
-//       console.log(snapshot, "which id or board have the same names");
-//       // setWarningDuplicate(true);
-//     });
-//   console.log(double, "is there a double board her?");
-// } else {
-//   console.log("add board");
-//   db.collection("boards").add({
-//     name: boardName,
-//   });
-// }
-
-//Submiting a new board - few checks;
-// you cannot file an empty name as bord
-// you cannot add another board with the same name;
-// when succesfully adding a board, you get a notification with the new board and
-// a link with the correct boardId to the new board page where you can see your pin.
-
-// work on not able to put a board in it with the same name
-// ==> then also validator/
-// also add the first pin to this board.
-// wait till this is done and then get the idea and all the information.
-
-// function in here where duplicate input is not allowed;
-// previous input will be deleted so that last input (same term) will remain
-// and will be used in App.js to getNewPins at refreshing of the page.
-
-// let test1 = db
-//         .collection("boards")
-//         .get()
-//         .then(function (querySnapshot) {
-//           querySnapshot.forEach(function (doc) {
-//             console.log(doc.id, "=>", doc.data());
-//           });
-//         });
-//       console.log(test1, "what is in test 1");

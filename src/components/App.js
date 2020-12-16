@@ -96,7 +96,7 @@ function App() {
             <Header onSubmit={onSearchSubmit} />
             <UserBoard boards={boards} />
           </Route>
-          <Route path="/boardPage/:boardName">
+          <Route path="/boardPage/:boardId">
             <Header onSubmit={onSearchSubmit} />
             <BoardPage />
           </Route>
