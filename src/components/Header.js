@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { IconButton } from "@material-ui/core";
 import "./Header.css";
 import db from "../firebase";
+import { Link } from "react-router-dom";
 
 function Header(props) {
   const [clickOpen, setClickOpen] = useState(false);
@@ -25,18 +26,17 @@ function Header(props) {
         term: input,
       });
     }
-    // function in here where duplicate input is not allowed;
-    // previous input will be deleted so that last input (same term) will remain
-    // and will be used in App.js to getNewPins at refreshing of the page.
   };
 
   return (
     <div className="app__header">
       <div className="header__wrapper">
         <div className="header__logo">
-          <IconButton>
-            <PinterestIcon />
-          </IconButton>
+          <Link to="/mainBoard">
+            <IconButton>
+              <PinterestIcon />
+            </IconButton>
+          </Link>
         </div>
         <div className="header__button homePage">
           <a href="/">Homepage</a>
@@ -84,10 +84,11 @@ function Header(props) {
               </div>
             ) : null}
           </div>
-          <IconButton>
-            {/* // will contain link to profile page */}
-            <FaceIcon />
-          </IconButton>
+          <Link to="/userBoard">
+            <IconButton>
+              <FaceIcon />
+            </IconButton>
+          </Link>
           <div className="header__options" onClick={onClick}>
             <IconButton size="small">
               <KeyboardArrowDownIcon />

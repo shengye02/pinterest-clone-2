@@ -35,6 +35,7 @@ const BoardPage = () => {
         <div className="boardPage">
           {boardPins?.map((boardPin) => {
             let { id, description, height, urls } = boardPin;
+            console.log(boardPin.urls, "what is in bordPin urls?");
             return (
               <Pin
                 id={id}

@@ -75,7 +75,6 @@ function App() {
           });
         });
       });
-    console.log(boards, " what is in boards?");
     setBoards(boards);
   };
 

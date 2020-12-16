@@ -5,7 +5,6 @@ import UserBoardHeader from "./UserBoardHeader";
 
 function UserBoard(props) {
   let { boards } = props;
-  console.log(boards, "how many boards?");
   return (
     <div>
       <UserBoardHeader />

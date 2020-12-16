@@ -13,11 +13,12 @@ const Mainboard = (props) => {
   return (
     <div className="app__body">
       <div className="mainboard">
-        {pins.map((image) => {
+        {pins.map((image, index) => {
           let { id, description, height, term, urls } = image;
           return (
             <Pin
               onSubmit={submitBoard}
+              key={index}
               id={id}
               description={description}
               height={height}
