@@ -75,9 +75,6 @@ function App() {
           });
         });
       });
-    // only send about 5 board to MainBoards to send to Pins in the small dropdown. the last five
-    // so from the boards retrieved, make another array with the last 5 (slice I think?)
-    // these are the boards for the UserBoard
     setBoards(boards);
   };
 
@@ -92,7 +89,7 @@ function App() {
         <Switch>
           <Route path="/mainboard">
             <Header onSubmit={onSearchSubmit} />
-            <Mainboard pins={pins} getBoards={getMyBoards} boards={boards} />
+            <Mainboard pins={pins} getBoards={getMyBoards} />
           </Route>
           <Route path="/userBoard">
             <Header onSubmit={onSearchSubmit} />
