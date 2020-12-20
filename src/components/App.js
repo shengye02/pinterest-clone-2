@@ -96,7 +96,18 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route path="/mainboard">
+
+          <Route path="/userBoard">
+            <Header onSubmit={onSearchSubmit} />
+            <UserBoard boards={boards} />
+          </Route>
+          
+          <Route path="/boardPage/:boardId">
+            <Header onSubmit={onSearchSubmit} />
+            <BoardPage />
+          </Route>
+
+          <Route path="/">
             <Header onSubmit={onSearchSubmit} />
             <Mainboard
               pins={pins}
@@ -104,14 +115,7 @@ function App() {
               boardsToPick={boardsToPick}
             />
           </Route>
-          <Route path="/userBoard">
-            <Header onSubmit={onSearchSubmit} />
-            <UserBoard boards={boards} />
-          </Route>
-          <Route path="/boardPage/:boardId">
-            <Header onSubmit={onSearchSubmit} />
-            <BoardPage />
-          </Route>
+
         </Switch>
       </Router>
     </div>
