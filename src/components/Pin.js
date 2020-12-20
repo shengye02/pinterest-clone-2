@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -7,11 +6,10 @@ import Modal from "./Modal";
 import "./Modal.css";
 
 const Pin = (props) => {
-  let { id, description, height, urls, page, boardsToPick } = props;
+  let { id, description, height, urls, page } = props;
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [boardName, setBoard] = useState("");
-  const history = useHistory();
 
   if (description && description.length > 37) {
     let sentence = description.split(".");
@@ -19,7 +17,6 @@ const Pin = (props) => {
   }
 
   const onClick = () => {
-    console.log("is onClick getting clicked too?");
     setClickOpen((openState) => !openState);
   };
 
@@ -38,16 +35,6 @@ const Pin = (props) => {
   const searchBoard = (e) => {
     console.log("searching an existing board");
     console.log(e.target.value, " what is in e target alue");
-  };
-
-  const pinToBoard = (e) => {
-    e.stopPropagation();
-    console.log("pinning to board");
-    //pinning current pin to an existing board.
-    // look for existing board in firebase;
-    // add it to collections of pins with certain information
-    // get redirected to BoardPage where you see the new pinned pin immediately
-    // history.push(`/boardPage/${boardId}`);
   };
 
   let sizePin = "small";
@@ -90,30 +77,14 @@ const Pin = (props) => {
                               type="text"
                               onChange={(e) => console.log(e.target.value)}
                             />
+                            {/* <button onClick="hello" type="submit"></button> */}
+                            {/* <div className="dropdown__existing__boards">
+                              <h1> Hello existing bords</h1>
+                              render through each board to make a small component 
+                              just like rooms in the whatsapp sidebarChat
+                            </div> */}
                           </form>
                         </div>
-                      </div>
-                      <div className="pin__dropdown__boardsToPick">
-                        <p>All boards</p>
-                        {boardsToPick.map((board) => {
-                          return (
-                            <div className="boardToPick">
-                              <div className="boardToPick__box" key={board.id}>
-                                <div className="boardToPick__box__details">
-                                  <img
-                                    src={board.data?.image}
-                                    alt="picture"
-                                    className="image"
-                                  />
-                                  <p> {board.data?.name}</p>
-                                  <div className="boardToPick__saveButton">
-                                    <p onClick={pinToBoard(board?.id)}> Save</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
                       </div>
                       <div className="pin__dropdown__createBoard">
                         <AddCircleIcon onClick={openModal} />

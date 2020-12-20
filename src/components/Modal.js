@@ -26,7 +26,6 @@ const Modal = (props) => {
         .add({
           name: boardName,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          urls: urls?.regular ? urls.full : urls,
         })
         .then(function (docRef) {
           db.collection("boards")

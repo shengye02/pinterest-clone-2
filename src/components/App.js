@@ -11,7 +11,6 @@ import BoardPage from "./BoardPage";
 function App() {
   const [pins, setNewPins] = useState([]);
   const [boards, setBoards] = useState([]);
-  const [boardsToPick, setBoardsToPick] = useState([]);
 
   const makeAPICall = (term) => {
     return unsplash.get("https://api.unsplash.com/search/photos", {
@@ -33,10 +32,10 @@ function App() {
   };
 
   const getMyNewPins = () => {
-    let promises = [];
-    let pinData = [];
-
     db.collection("terms").onSnapshot((snapshot) => {
+      let promises = [];
+      let pinData = [];
+
       let snapshotData = snapshot.docs;
       if (snapshotData.length >= 10) {
         snapshotData = snapshotData.slice(
@@ -66,7 +65,6 @@ function App() {
 
   const getMyBoards = () => {
     let boards = [];
-    let boardsToPick;
     db.collection("boards")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
@@ -76,15 +74,11 @@ function App() {
             data: doc.data(),
           });
         });
-        Promise.all(boards).then((results) => {
-          boardsToPick = results;
-          if (results.length >= 3) {
-            boardsToPick = results.slice(Math.max(results.length - 3, 0));
-          }
-          setBoardsToPick(boardsToPick);
-          setBoards(boards);
-        });
       });
+    // only send about 5 board to MainBoards to send to Pins in the small dropdown. the last five
+    // so from the boards retrieved, make another array with the last 5 (slice I think?)
+    // these are the boards for the UserBoard
+    setBoards(boards);
   };
 
   useEffect(() => {
@@ -98,11 +92,7 @@ function App() {
         <Switch>
           <Route path="/mainboard">
             <Header onSubmit={onSearchSubmit} />
-            <Mainboard
-              pins={pins}
-              getBoards={getMyBoards}
-              boardsToPick={boardsToPick}
-            />
+            <Mainboard pins={pins} getBoards={getMyBoards} boards={boards} />
           </Route>
           <Route path="/userBoard">
             <Header onSubmit={onSearchSubmit} />
