@@ -6,6 +6,8 @@ import Pin from "./Pin";
 const Mainboard = (props) => {
   const { pins } = props;
 
+  // boards are here actually in the props I think
+
   const submitBoard = () => {
     props.getBoards();
   };
@@ -25,6 +27,7 @@ const Mainboard = (props) => {
               term={term}
               urls={urls}
               page="mainBoard"
+              // boards={boardsDropdown}
             />
           );
         })}

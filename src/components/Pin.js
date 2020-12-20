@@ -80,6 +80,8 @@ const Pin = (props) => {
                             {/* <button onClick="hello" type="submit"></button> */}
                             {/* <div className="dropdown__existing__boards">
                               <h1> Hello existing bords</h1>
+                              render through each board to make a small component 
+                              just like rooms in the whatsapp sidebarChat
                             </div> */}
                           </form>
                         </div>
