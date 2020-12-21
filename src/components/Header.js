@@ -8,11 +8,13 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { IconButton } from "@material-ui/core";
 import "./Header.css";
 import db from "../firebase";
+import { auth, provider } from '../firebase';
 import { Link } from "react-router-dom";
 
 function Header(props) {
   const [clickOpen, setClickOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [userName, setUserName] = useState('')
 
   const onClick = () => {
     setClickOpen((openState) => !openState);
@@ -28,9 +30,25 @@ function Header(props) {
     }
   };
 
+  const signIn = () => {
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        console.log(result)
+        setUserName(result.user.displayName)
+      })
+      .catch((error) => alert(error.message))
+  }
+
+  const handleSignOut = () => {
+    auth.signOut().then(() => {
+      setUserName()
+    }).catch((error) => alert(error.message))
+  }
+
   return (
     <div className="app__header">
       <div className="header__wrapper">
+
         <div className="header__logo">
           <Link to="/mainBoard">
             <IconButton>
@@ -38,12 +56,15 @@ function Header(props) {
             </IconButton>
           </Link>
         </div>
+
         <div className="header__button homePage">
           <a href="/">Homepage</a>
         </div>
+
         <div className="header__button following">
           <a href="/">Following</a>
         </div>
+
         <div className="header__search">
           <div className="header__searchContainer">
             <SearchIcon />
@@ -59,6 +80,7 @@ function Header(props) {
             </form>
           </div>
         </div>
+
         <div className="header__menuItems">
           <div className="header__notification" onClick={onClick}>
             <IconButton>
@@ -72,6 +94,7 @@ function Header(props) {
               </div>
             ) : null}
           </div>
+
           <div className="header__messages" onClick={onClick}>
             <IconButton>
               <TextsmsIcon />
@@ -84,11 +107,13 @@ function Header(props) {
               </div>
             ) : null}
           </div>
+
           <Link to="/userBoard">
             <IconButton>
               <FaceIcon />
             </IconButton>
           </Link>
+
           <div className="header__options" onClick={onClick}>
             <IconButton size="small">
               <KeyboardArrowDownIcon />
@@ -97,6 +122,7 @@ function Header(props) {
               <div className="header__options__dropdown">
                 <div className="header__options__intro">
                   <h1> Options</h1>
+                  <p onClick={handleSignOut}>Log out</p>
                 </div>
               </div>
             ) : null}

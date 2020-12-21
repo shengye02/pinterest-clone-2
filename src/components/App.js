@@ -12,9 +12,10 @@ function App() {
   const [pins, setNewPins] = useState([]);
   const [boards, setBoards] = useState([]);
   const [boardsToPick, setBoardsToPick] = useState([]);
+  const [interests, setInterests] = useState([])
 
-  const makeAPICall = (term) => {
-    return unsplash.get("https://api.unsplash.com/search/photos", {
+  const callUnsplashAPI = (term) => {
+    return unsplash.get("/search/photos", {
       params: { query: term },
     });
   };
@@ -22,11 +23,13 @@ function App() {
   const onSearchSubmit = (term) => {
     let promises = [];
     let searchedPins = [];
+
     promises.push(
-      makeAPICall(term).then((res) => {
+      callUnsplashAPI(term).then((res) => {
         searchedPins.push(res.data.results);
       })
     );
+
     Promise.all(promises).then(() => {
       setNewPins(searchedPins);
     });
@@ -46,7 +49,7 @@ function App() {
       }
       snapshotData.map((doc) => {
         promises.push(
-          makeAPICall(doc.data().term).then((res) => {
+          callUnsplashAPI(doc.data().term).then((res) => {
             let results = res.data.results;
             results.map((object) => {
               pinData.push(object);
@@ -67,29 +70,44 @@ function App() {
   const getMyBoards = () => {
     let boards = [];
     let boardsToPick;
-    db.collection("boards")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          boards.push({
-            id: doc.id,
-            data: doc.data(),
-          });
-        });
-        Promise.all(boards).then((results) => {
-          boardsToPick = results;
-          if (results.length >= 3) {
-            boardsToPick = results.slice(Math.max(results.length - 3, 0));
-          }
-          setBoardsToPick(boardsToPick);
-          setBoards(boards);
+
+    db.collection("boards").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        boards.push({
+          id: doc.id,
+          data: doc.data(),
         });
       });
+
+      Promise.all(boards).then((results) => {
+        boardsToPick = results;
+
+        if (results.length >= 3) {
+          boardsToPick = results.slice(Math.max(results.length - 3, 0));
+        }
+
+        setBoardsToPick(boardsToPick);
+        setBoards(boards);
+      });
+    });
   };
+
+  const getMyInterests = () => {
+
+    db.collection('interests').onSnapshot(snapshot => {
+      setInterests(snapshot.docs.map(doc => ({
+        img: doc.data().img,
+        name: doc.data().name
+      })))
+    })
+  }
+
+  console.log(interests)
 
   useEffect(() => {
     getMyNewPins();
     getMyBoards();
+    getMyInterests()
   }, []);
 
   return (
@@ -101,7 +119,7 @@ function App() {
             <Header onSubmit={onSearchSubmit} />
             <UserBoard boards={boards} />
           </Route>
-          
+
           <Route path="/boardPage/:boardId">
             <Header onSubmit={onSearchSubmit} />
             <BoardPage />
@@ -110,6 +128,7 @@ function App() {
           <Route path="/">
             <Header onSubmit={onSearchSubmit} />
             <Mainboard
+              interests={interests}
               pins={pins}
               getBoards={getMyBoards}
               boardsToPick={boardsToPick}

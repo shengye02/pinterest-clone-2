@@ -41,8 +41,8 @@ const Pin = (props) => {
   };
 
   const pinToBoard = (e) => {
-    e.stopPropagation();
     console.log("pinning to board");
+    console.log('testing konnchiwa');
     //pinning current pin to an existing board.
     // look for existing board in firebase;
     // add it to collections of pins with certain information
