@@ -8,6 +8,7 @@ import "./Modal.css";
 
 const Pin = (props) => {
   let { id, description, height, urls, page, boardsToPick } = props;
+  
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [boardName, setBoard] = useState("");
@@ -116,7 +117,7 @@ const Pin = (props) => {
                         })}
                       </div>
                       <div className="pin__dropdown__createBoard">
-                        <AddCircleIcon onClick={openModal} />
+                        <AddCircleIcon onClick={setModalOpen(false)} />
                         <p> Create board</p>
                       </div>
                     </div>
@@ -137,9 +138,9 @@ const Pin = (props) => {
       </div>
       {modalOpen ? (
         <Modal
-          clickOutside={clickOutside}
-          openModal={openModal}
-          submitBoard={submitBoard}
+          clickOutside={setModalOpen(false)}
+          openModal={setModalOpen((openState) => !openState)}
+          submitBoard={props.onSubmit(boardName)}
           urls={urls?.regular ? urls.full : urls}
           id={id}
           description={description}

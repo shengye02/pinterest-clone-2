@@ -5,6 +5,7 @@ import Pin from "./Pin";
 
 const Mainboard = (props) => {
   const { pins, boardsToPick } = props;
+  
   const submitBoard = () => {
     props.getBoards();
   };

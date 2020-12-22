@@ -67,6 +67,7 @@ function App() {
   const getMyBoards = () => {
     let boards = [];
     let boardsToPick;
+    
     db.collection("boards")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
@@ -76,6 +77,7 @@ function App() {
             data: doc.data(),
           });
         });
+    
         Promise.all(boards).then((results) => {
           boardsToPick = results;
           if (results.length >= 3) {
