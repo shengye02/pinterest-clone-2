@@ -5,9 +5,11 @@ import SearchIcon from "@material-ui/icons/Search";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Modal from "./Modal";
 import "./Modal.css";
+import db from "../firebase";
+import firebase from "firebase";
 
 const Pin = (props) => {
-  let { id, description, height, urls, page, boardsToPick } = props;
+  let { id, description, height, urls, kindOfPins, boardsToPick } = props;
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [boardName, setBoard] = useState("");
@@ -19,7 +21,6 @@ const Pin = (props) => {
   }
 
   const onClick = () => {
-    console.log("is onClick getting clicked too?");
     setClickOpen((openState) => !openState);
   };
 
@@ -35,17 +36,40 @@ const Pin = (props) => {
     setModalOpen(false);
   };
 
-  const searchBoard = (e) => {
-    console.log("searching an existing board");
-    console.log(e.target.value, " what is in e target alue");
-  };
+  // const searchBoard = (e) => {
+  //   console.log("searching an existing board");
+  //   console.log(e.target.value, " what is in e target alue");
+  // };
 
-  const pinToBoard = (e) => {
+  const pinToBoard = (e, boardId) => {
     e.stopPropagation();
-    console.log("pinning to board");
-    //pinning current pin to an existing board.
-    // look for existing board in firebase;
-    // add it to collections of pins with certain information
+
+    db.collection("boards")
+      .doc(boardId)
+      .collection("pins")
+      .onSnapshot((snapshot) => {
+        console.log(snapshot, "what is in sna[shot? ");
+        snapshot.docs.map((doc) => {
+          // if (id === doc.data().id) {
+          // delete the pin / or don't add it
+          //else { add it}
+          // .where('id', '!==', id )
+          // .where query migjt be handy to use
+          //   console.log(id, "which id?");
+          //   db.collection("boards")
+          //     .doc(boardId)
+          //     .collection("pins")
+          //     .add({
+          //       id: id,
+          //       height: height,
+          //       description: description,
+          //       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          //       urls: urls?.regular ? urls.full : urls,
+          //     });
+          // } else {
+          // }
+        });
+      });
     // get redirected to BoardPage where you see the new pinned pin immediately
     // history.push(`/boardPage/${boardId}`);
   };
@@ -57,9 +81,9 @@ const Pin = (props) => {
     sizePin = "small";
   }
 
-  let mainBoardPage = false;
-  if (page == "mainBoard") {
-    mainBoardPage = true;
+  let mainBoardPins = false;
+  if (kindOfPins == "mainBoardPins") {
+    mainBoardPins = true;
   }
 
   return (
@@ -71,7 +95,7 @@ const Pin = (props) => {
             className="image"
             alt="pin"
           />
-          {mainBoardPage && (
+          {mainBoardPins && (
             <div className="layer">
               <div className="pin__boards__menu">
                 <div className="pin__boards__menu left">
@@ -97,8 +121,8 @@ const Pin = (props) => {
                         <p>All boards</p>
                         {boardsToPick.map((board) => {
                           return (
-                            <div className="boardToPick">
-                              <div className="boardToPick__box" key={board.id}>
+                            <div className="boardToPick" key={board.id}>
+                              <div className="boardToPick__box">
                                 <div className="boardToPick__box__details">
                                   <img
                                     src={board.data?.image}
@@ -106,8 +130,11 @@ const Pin = (props) => {
                                     className="image"
                                   />
                                   <p> {board.data?.name}</p>
-                                  <div className="boardToPick__saveButton">
-                                    <p onClick={pinToBoard(board?.id)}> Save</p>
+                                  <div
+                                    className="boardToPick__saveButton"
+                                    onClick={(e) => pinToBoard(e, board.id)}
+                                  >
+                                    <p> Save </p>
                                   </div>
                                 </div>
                               </div>

@@ -3,12 +3,14 @@
 }
 
 .pin__container {
+  background-color: blue;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .pin__container .medium {
