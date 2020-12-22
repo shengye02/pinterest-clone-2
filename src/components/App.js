@@ -13,40 +13,55 @@ function App() {
   const [boards, setBoards] = useState([]);
   const [boardsToPick, setBoardsToPick] = useState([]);
 
-  const makeAPICall = (term) => {
-    return unsplash.get("https://api.unsplash.com/search/photos", {
+  const callUnsplashAPI = (term) => {
+    return unsplash.get("/search/photos", {
       params: { query: term },
     });
   };
 
   const onSearchSubmit = (term) => {
-    let promises = [];
-    let searchedPins = [];
-    promises.push(
-      makeAPICall(term).then((res) => {
-        searchedPins.push(res.data.results);
-      })
-    );
-    Promise.all(promises).then(() => {
-      setNewPins(searchedPins);
-    });
+    callUnsplashAPI(term).then((res) => {
+      setNewPins(res.data.results);
+    })
+
+    // let promises = [];
+    // let searchedPins = [];
+    // promises.push(
+    //   callUnsplashAPI(term).then((res) => {
+    //     searchedPins.push(res.data.results);
+    //   })
+    // );
+    // Promise.all(promises).then(() => {
+    //   setNewPins(searchedPins);
+    // });
   };
 
   const getMyNewPins = () => {
+    db.collection('terms').onSnapshot(snapshot => {
+      if (snapshot.docs.length >= 10) {
+        snapshot.docs = snapshot.docs.slice(      //what is this for??
+          snapshot.docs.length - 5,
+          snapshot.docs.length
+        )
+      }
+    })
+
+
     let promises = [];
     let pinData = [];
 
     db.collection("terms").onSnapshot((snapshot) => {
       let snapshotData = snapshot.docs;
+
       if (snapshotData.length >= 10) {
-        snapshotData = snapshotData.slice(
+        snapshotData = snapshotData.slice(      //what is this for??
           snapshotData.length - 5,
           snapshotData.length
         );
       }
       snapshotData.map((doc) => {
         promises.push(
-          makeAPICall(doc.data().term).then((res) => {
+          callUnsplashAPI(doc.data().term).then((res) => {
             let results = res.data.results;
             results.map((object) => {
               pinData.push(object);
@@ -64,29 +79,29 @@ function App() {
     });
   };
 
-  const getMyBoards = () => {
-    let boards = [];
-    let boardsToPick;
-    
-    db.collection("boards")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          boards.push({
-            id: doc.id,
-            data: doc.data(),
-          });
+  const getMyBoards = async () => {
+    await db.collection("boards").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        setBoards({
+          id: doc.id,
+          data: doc.data(),
         });
-    
-        Promise.all(boards).then((results) => {
-          boardsToPick = results;
-          if (results.length >= 3) {
-            boardsToPick = results.slice(Math.max(results.length - 3, 0));
-          }
-          setBoardsToPick(boardsToPick);
-          setBoards(boards);
-        });
-      });
+      })
+    })
+
+    if (boards.length >= 3) {
+      setBoardsToPick(boards.slice(Math.max(boards.length - 3, 0)))
+    }
+
+    // Promise.all(boards).then((results) => {
+
+    //   boardsToPick = results;
+    //   if (results.length >= 3) {
+    //     boardsToPick = results.slice(Math.max(results.length - 3, 0));
+    //   }
+    //   setBoardsToPick(boardsToPick);
+    //   setBoards(boards);
+    // });
   };
 
   useEffect(() => {
@@ -103,7 +118,7 @@ function App() {
             <Header onSubmit={onSearchSubmit} />
             <UserBoard boards={boards} />
           </Route>
-          
+
           <Route path="/boardPage/:boardId">
             <Header onSubmit={onSearchSubmit} />
             <BoardPage />
