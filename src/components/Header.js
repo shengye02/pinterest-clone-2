@@ -10,7 +10,7 @@ import "./Header.css";
 import db from "../firebase";
 import { Link } from "react-router-dom";
 
-function Header(props) {
+function Header({ onSubmit }) {
   const [clickOpen, setClickOpen] = useState(false);
   const [input, setInput] = useState("");
 
@@ -20,7 +20,7 @@ function Header(props) {
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
-    props.onSubmit(input);
+    onSubmit(input);
     if (input) {
       db.collection("terms").add({
         term: input,
@@ -64,25 +64,29 @@ function Header(props) {
             <IconButton>
               <NotificationsIcon />
             </IconButton>
-            {clickOpen ? (
-              <div className="header__notification__dropdown">
-                <div className="header__notification__dropdown updates">
-                  <h1>Updates</h1>
+            {
+              clickOpen ? (
+                <div className="header__notification__dropdown">
+                  <div className="header__notification__dropdown updates">
+                    <h1>Updates</h1>
+                  </div>
                 </div>
-              </div>
-            ) : null}
+              ) : null
+            }
           </div>
           <div className="header__messages" onClick={onClick}>
             <IconButton>
               <TextsmsIcon />
             </IconButton>
-            {clickOpen ? (
-              <div className="header__messages__sidenav">
-                <div className="header__message__intro">
-                  <h1> Messages</h1>
+            {
+              clickOpen ? (
+                <div className="header__messages__sidenav">
+                  <div className="header__message__intro">
+                    <h1> Messages</h1>
+                  </div>
                 </div>
-              </div>
-            ) : null}
+              ) : null
+            }
           </div>
           <Link to="/userBoard">
             <IconButton>
@@ -93,13 +97,15 @@ function Header(props) {
             <IconButton size="small">
               <KeyboardArrowDownIcon />
             </IconButton>
-            {clickOpen ? (
-              <div className="header__options__dropdown">
-                <div className="header__options__intro">
-                  <h1> Options</h1>
+            {
+              clickOpen ? (
+                <div className="header__options__dropdown">
+                  <div className="header__options__intro">
+                    <h1> Options</h1>
+                  </div>
                 </div>
-              </div>
-            ) : null}
+              ) : null
+            }
           </div>
         </div>
       </div>
