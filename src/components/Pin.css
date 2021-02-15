@@ -1,30 +1,21 @@
 .pin {
   height: fit-content;
   display: inline-block;
-  padding: 15px;
+  padding: 10px;
   margin: 0 0 10px;
 }
 
 .pin__container {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
   box-sizing: border-box;
-}
-
-.pin__container .medium {
+  cursor: pointer;
   width: 236px;
   height: 354px;
 }
 
-.pin__container .small {
-  width: 236px;
-  height: 236px;
-}
-
-.pin__container > img {
+.pin__container img {
   display: flex;
   width: 100%;
   cursor: zoom-in;

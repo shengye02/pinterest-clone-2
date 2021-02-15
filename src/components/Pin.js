@@ -58,75 +58,73 @@ const Pin = (props) => {
   return (
     <div className="pin">
       <div className="pin__container" key={id}>
-        <div className={`pin__container ${sizePin}`}>
-          <img
-            src={urls?.regular ? urls.full : urls}
-            className="image"
-            alt="pin"
-          />
-          {mainBoardPage && (
-            <div className="layer">
-              <div className="pin__boards__menu">
-                <div className="pin__boards__menu left">
-                  <div className="pin__boards__menuDetails">
-                    <h1>Boards</h1>
-                    <KeyboardArrowDownIcon onClick={onClick} />
-                  </div>
-                  {clickOpen ? (
-                    <div className="pin__dropdown">
-                      <div className="pin__dropdown__search">
-                        <div className="pin__dropdown__searchContainer">
-                          <SearchIcon />
-                          <form>
-                            <input
-                              placeholder="Search"
-                              type="text"
-                              onChange={(e) => console.log(e.target.value)}
-                            />
-                          </form>
-                        </div>
+        <img
+          src={urls?.regular ? urls.full : urls}
+          className="image"
+          alt="pin"
+        />
+        {mainBoardPage && (
+          <div className="layer">
+            <div className="pin__boards__menu">
+              <div className="pin__boards__menu left">
+                <div className="pin__boards__menuDetails">
+                  <h1>Boards</h1>
+                  <KeyboardArrowDownIcon onClick={onClick} />
+                </div>
+                {clickOpen ? (
+                  <div className="pin__dropdown">
+                    <div className="pin__dropdown__search">
+                      <div className="pin__dropdown__searchContainer">
+                        <SearchIcon />
+                        <form>
+                          <input
+                            placeholder="Search"
+                            type="text"
+                            onChange={(e) => console.log(e.target.value)}
+                          />
+                        </form>
                       </div>
-                      <div className="pin__dropdown__boardsToPick">
-                        <p>All boards</p>
-                        {boardsToPick.map((board) => {
-                          return (
-                            <div className="boardToPick">
-                              <div className="boardToPick__box" key={board.id}>
-                                <div className="boardToPick__box__details">
-                                  <img
-                                    src={board.data?.image}
-                                    alt="picture"
-                                    className="image"
-                                  />
-                                  <p> {board.data?.name}</p>
-                                  <div className="boardToPick__saveButton">
-                                    <p onClick={pinToBoard(board?.id)}> Save</p>
-                                  </div>
+                    </div>
+                    <div className="pin__dropdown__boardsToPick">
+                      <p>All boards</p>
+                      {boardsToPick.map((board) => {
+                        return (
+                          <div className="boardToPick">
+                            <div className="boardToPick__box" key={board.id}>
+                              <div className="boardToPick__box__details">
+                                <img
+                                  src={board.data?.image}
+                                  alt="picture"
+                                  className="image"
+                                />
+                                <p> {board.data?.name}</p>
+                                <div className="boardToPick__saveButton">
+                                  <p onClick={pinToBoard(board?.id)}> Save</p>
                                 </div>
                               </div>
                             </div>
-                          );
-                        })}
-                      </div>
-                      <div className="pin__dropdown__createBoard">
-                        <AddCircleIcon onClick={openModal} />
-                        <p> Create board</p>
-                      </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  ) : null}
-                </div>
-                <div className="pin__boards__menu right">
-                  <div className="pin__boards__menuDetails">
-                    <h1>Save</h1>
+                    <div className="pin__dropdown__createBoard">
+                      <AddCircleIcon onClick={openModal} />
+                      <p> Create board</p>
+                    </div>
                   </div>
+                ) : null}
+              </div>
+              <div className="pin__boards__menu right">
+                <div className="pin__boards__menuDetails">
+                  <h1>Save</h1>
                 </div>
               </div>
             </div>
-          )}
-          {/* <div className="pin__text__container">
+          </div>
+        )}
+        {/* <div className="pin__text__container">
             <p>{description}</p>
           </div> */}
-        </div>
       </div>
       {modalOpen ? (
         <Modal

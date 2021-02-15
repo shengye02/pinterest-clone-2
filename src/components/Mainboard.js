@@ -10,8 +10,8 @@ const Mainboard = (props) => {
   };
 
   return (
-    <div className="app__body">
-      <div className="mainboard">
+    <div className="mainboard">
+      <div className="mainboard__container">
         {pins.map((image, index) => {
           let { id, description, height, term, urls } = image;
           return (
