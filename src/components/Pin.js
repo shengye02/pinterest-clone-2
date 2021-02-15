@@ -1,5 +1,4 @@
-import React, { useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -11,7 +10,6 @@ const Pin = (props) => {
   const [clickOpen, setClickOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [boardName, setBoard] = useState("");
-  const history = useHistory();
 
   if (description && description.length > 37) {
     let sentence = description.split(".");
@@ -19,7 +17,6 @@ const Pin = (props) => {
   }
 
   const onClick = () => {
-    console.log("is onClick getting clicked too?");
     setClickOpen((openState) => !openState);
   };
 
@@ -35,14 +32,10 @@ const Pin = (props) => {
     setModalOpen(false);
   };
 
-  const searchBoard = (e) => {
-    console.log("searching an existing board");
-    console.log(e.target.value, " what is in e target alue");
-  };
+  const searchBoard = (e) => {};
 
   const pinToBoard = (e) => {
     e.stopPropagation();
-    console.log("pinning to board");
     //pinning current pin to an existing board.
     // look for existing board in firebase;
     // add it to collections of pins with certain information
@@ -130,9 +123,9 @@ const Pin = (props) => {
               </div>
             </div>
           )}
-          <div className="pin__text__container">
+          {/* <div className="pin__text__container">
             <p>{description}</p>
-          </div>
+          </div> */}
         </div>
       </div>
       {modalOpen ? (

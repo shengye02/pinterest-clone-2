@@ -1,18 +1,9 @@
-.app__header {
-  background-color: white;
-  height: 80px;
-  flex: 1 1 auto;
-  padding: 12px 4px 4px 16px;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-}
-
-.header__wrapper {
-  background-color: white;
+.header {
   display: flex;
   align-items: center;
   height: 56px;
+  padding: 12px 4px 4px 16px;
+  background-color: white;
   color: black;
   margin: 0px;
 }
@@ -59,21 +50,17 @@
 
 .header__search {
   flex: 1;
-  height: 48px;
-  padding: 10px;
 }
 
 .header__searchContainer {
   display: flex;
   align-items: center;
   height: 48px;
-  border: 1px solid;
-  border-radius: 4px;
-  width: 100%s;
-  border: none;
   background-color: #efefef;
-  padding-left: 10px;
+  width: 100%;
   border-radius: 50px;
+  border: none;
+  padding-left: 10px;
 }
 
 .header__searchContainer:hover {
@@ -90,7 +77,6 @@
 }
 
 .header__searchContainer > form > input {
-  flex: 1;
   background-color: transparent;
   border: none;
   width: 100%;

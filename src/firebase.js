@@ -1,13 +1,13 @@
 import firebase from "firebase";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBJ7m7sRzPFU079KBgawAX6dkwncGaIEpo",
-  authDomain: "pinterest-clone-c7401.firebaseapp.com",
-  projectId: "pinterest-clone-c7401",
-  storageBucket: "pinterest-clone-c7401.appspot.com",
-  messagingSenderId: "946618085203",
-  appId: "1:946618085203:web:c23ef055a2bec52bdffba6",
-  measurementId: "G-FY2NS5WPJW",
+  apiKey: "AIzaSyA3yBMMHwQJ1P8CyHyJYTxBQxFTttQlazo",
+  authDomain: "pinterest-9d11a.firebaseapp.com",
+  projectId: "pinterest-9d11a",
+  storageBucket: "pinterest-9d11a.appspot.com",
+  messagingSenderId: "502361509838",
+  appId: "1:502361509838:web:e4b6bc7a93410d71df259f",
+  measurementId: "G-C1DS2S6FRW",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 

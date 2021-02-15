@@ -1,5 +1,8 @@
 .pin {
   height: fit-content;
+  display: inline-block;
+  padding: 15px;
+  margin: 0 0 10px;
 }
 
 .pin__container {
@@ -12,33 +15,24 @@
 }
 
 .pin__container .medium {
-  width: 252px;
-  height: 418px;
-}
-
-.pin__container > img {
-  display: flex;
-  cursor: zoom-in;
-  border-radius: 16px;
-  object-fit: cover;
-}
-
-.pin__container .medium > img {
   width: 236px;
   height: 354px;
 }
 
 .pin__container .small {
-  width: 252px;
-  height: 292px;
-}
-
-.pin__container .small > img {
   width: 236px;
   height: 236px;
 }
 
-.image {
+.pin__container > img {
+  display: flex;
+  width: 100%;
+  cursor: zoom-in;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.img {
   opacity: 1;
   display: block;
   width: 100%;
@@ -67,22 +61,6 @@
 
 .pin__img__container > img:hover .img__buttons {
   color: #262626;
-}
-
-.pin__text__container {
-  display: flex;
-  flex: 1;
-  background-color: white;
-  box-sizing: border-box;
-  padding: 8px 6px 16px;
-}
-
-.pin__text__container p {
-  color: #111;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  text-align: left;
 }
 
 .pin__boards__menu {

@@ -7,8 +7,10 @@
 }
 
 .mainboard {
-  display: flex;
-  flex-wrap: wrap;
+  column-count: 5;
+  column-gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
   background-color: white;
   height: 100%;
 }
